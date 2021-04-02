@@ -1,17 +1,18 @@
 
 ########################################################
-# This python code estimates surface radiation and energy fluxes over grass using a land surface scheme
+# This python code estimates day time surface radiation and energy fluxes over grass using a land surface scheme
 # that incorporates limited routine weather data. The code also evaluate the sensitivity of the scheme
 # to different parameterizations of surface resistance for contrasting soil moisture regimes.
 
 ######################################################
 
-######################################
+##########################################################################
 # Please cite the following reference if you have used this code in any publication
 # Citation: K. A. Ishola, G. Mills, R. M., Fealy, Ó. Ní Choncubhair, R. Fealy (2020). Improving a land
 #                   surface scheme for estimating sensible and latent heat fluxes above grasslands with
 #                   contrasting soil moisture zones. Agric. Fores Meteor. 294, 108151,
 #                   https://doi.org/10.1016/j.agrformet.2020.108151
+########################################################################
 
 ########   Define the required libraries ################
 import math
@@ -109,8 +110,8 @@ def it_2(ws,t24h,tc,P,S,rh,H,L):
  return(ra,H,L,ustar_new,Lin)
 ###################################################################################
 
-####### import input data in csv format  (.csv) ##################
-data = pd.read_csv("C:/Users/17252302/Desktop/PhD_MU/data/point_estimated fluxes/Johnstown/test3.csv")
+####### import input data in csv format  (.csv) from the local directory ##################
+data = pd.read_csv("C:/Users/17252302/Desktop/PhD_MU/data/point_estimated fluxes/Johnstown/test.csv")
 data = data.convert_objects(convert_numeric=True)
 #########################################
 
@@ -199,11 +200,11 @@ Le = (eslope*(Rn - Go) + ((den_cp*(es-ea))/ra)) / (eslope + psyc*(1 + rc/ra))  #
 #Le = Rn - Go - H         #### Balance method
 ##############################################################
 
-##### export data in csv format #######################
+##### export data in csv format to local directory #######################
 my_data=np.vstack((date,Rn, H, Le, Go, rc, ra, Lou, Lin,S, ts))
 my_data=my_data.T
 df= pd.DataFrame(my_data)
-colnames=['date','Rn','H','Le','G','rc','ra','Lou','Lin','S','ts']
+colnames=['date','Rn','H','Le','G','rc','ts']
 df.to_csv('C:/Users/17252302/Desktop/PhD_MU/data/point_estimated fluxes/Johnstown/flux_test.csv',
          index=False, header=colnames) # write output to csv
 #######################################################################
