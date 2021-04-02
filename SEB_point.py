@@ -1,5 +1,18 @@
 
-# -*- coding: utf-8 -*import numpy as np
+########################################################
+# This python code estimates surface radiation and energy fluxes over grass using a land surface scheme
+# that incorporates limited routine weather data. The code also evaluate the sensitivity of the scheme
+# to different parameterizations of surface resistance for contrasting soil moisture regimes.
+
+######################################################
+
+######################################
+# Please cite the following reference if you have used this code in any publication
+# Citation: K. A. Ishola, G. Mills, R. M., Fealy, Ó. Ní Choncubhair, R. Fealy (2020). Improving a land
+#                   surface scheme for estimating sensible and latent heat fluxes above grasslands with
+#                   contrasting soil moisture zones. Agric. Fores Meteor. 294, 108151,
+#                   https://doi.org/10.1016/j.agrformet.2020.108151
+
 ########   Define the required libraries ################
 import math
 from math import e
@@ -20,32 +33,32 @@ def Tk(tc):
     x = tc + 273.15
     return(x)
 ##############################################################################
-    
-########## Function to compute water vapour fractional conductance ######################   
+
+########## Function to compute water vapour fractional conductance ######################
 def Fdq(dq):
     y = 1/(1 + 0.16*((dq) - 3))
     y = [1 if i > 1 else i for i in y]
     return(y)
 ######################################################################################
-    
-##########   Function to compute radiation fraction  ####################################    
+
+##########   Function to compute radiation fraction  ####################################
 def Fs(S):
-    z = (770*S)/ (1000*S + 230*(1000 - 2*S))  
-    return(z)    
+    z = (770*S)/ (1000*S + 230*(1000 - 2*S))
+    return(z)
 #########################################################################################
-    
+
 #######################  Function to compute soil moisture response    #############
 def Fm(sm):
     u = [0.1 if i < 0.1 else i for i in sm]
     u = np.array([1 + 4.3*(i - 0.3) if  i < 0.3 else 1 for i in u])
     return(u)
 ############################################################################
-        
+
 #omit error values ############
 np.seterr(divide='ignore', invalid='ignore')
 ##################################
 
-#######  Function for the first loop i.e for neutral condition. ############ 
+#######  Function for the first loop i.e for neutral condition. ############
 def it_1(ws,t24h,tc,P,S,rh):
  psyc = (1005*P*462)/(287*2450000) #(0.001005*P)/(0.622*2.45)
  eslope = 4098*((0.6108*np.exp((17.27*tc)/(tc+237.3)))/(tc+237.3)**2)
@@ -68,7 +81,7 @@ def it_1(ws,t24h,tc,P,S,rh):
  L=(Tk(tc)*ustar**2)/(k*9.8*tvs)
  return(ra,H,L)
 ###########################################################################
- 
+
 ####   Function for the second loop i.e for stablity correction.   ##############
 def it_2(ws,t24h,tc,P,S,rh,H,L):
  psyc = (1005*P*462)/(287*2450000)
@@ -191,7 +204,7 @@ my_data=np.vstack((date,Rn, H, Le, Go, rc, ra, Lou, Lin,S, ts))
 my_data=my_data.T
 df= pd.DataFrame(my_data)
 colnames=['date','Rn','H','Le','G','rc','ra','Lou','Lin','S','ts']
-df.to_csv('C:/Users/17252302/Desktop/PhD_MU/data/point_estimated fluxes/Johnstown/flux_test.csv', 
+df.to_csv('C:/Users/17252302/Desktop/PhD_MU/data/point_estimated fluxes/Johnstown/flux_test.csv',
          index=False, header=colnames) # write output to csv
 #######################################################################
 
