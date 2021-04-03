@@ -3,6 +3,9 @@
 # This python code estimates day time surface radiation and energy fluxes over grass using a land surface scheme
 # that incorporates limited routine weather data. The code also evaluate the sensitivity of the scheme
 # to different parameterizations of surface resistance for contrasting soil moisture regimes.
+# The scheme is adapted from de Rooy and Holtslag (1999) (dRH99), and the tested surface resistance
+# models are based on FAO method (FAO; Allen et al., 1998) and modified Jarvis approach implemented by
+# Beljaars and Bosveld (1997) (BB97)
 
 ######################################################
 
@@ -201,7 +204,7 @@ Le = (eslope*(Rn - Go) + ((den_cp*(es-ea))/ra)) / (eslope + psyc*(1 + rc/ra))  #
 ##############################################################
 
 ##### export data in csv format to local directory #######################
-my_data=np.vstack((date,Rn, H, Le, Go, rc, ra, Lou, Lin,S, ts))
+my_data=np.vstack((date,Rn, H, Le, Go, rc,ts))
 my_data=my_data.T
 df= pd.DataFrame(my_data)
 colnames=['date','Rn','H','Le','G','rc','ts']
@@ -237,7 +240,7 @@ print(r_value,slope,intercept,p_value)
 fig = plt.figure()
 ax = fig.add_subplot(111)
 plt.plot(Le_obs,Le, '.',c="black",label="BB97")
-plt.plot(Le_obs, slope*Le_obs + intercept, '-',c="r",label="r = 0.76")
+plt.plot(Le_obs, slope*Le_obs + intercept, '-',c="r",label="r = 0.82")
 #label axes
 xlabel("Measured QE (W m^-2)")
 ylabel("Estimated QE (W m^-2)")
@@ -246,5 +249,5 @@ ax.text(0.1, 0.9,'', horizontalalignment='center',
      transform=ax.transAxes)
 plt.legend()
 plt.show()
-#fig.savefig('C:\\Users\\admin\\Desktop\\Oak\\Le06_Schm4.png',dpi=600,transparent=True)
+fig.savefig('C:/Users/17252302/Desktop/PhD_MU/data/point_estimated fluxes/Johnstown/Le.png',dpi=600,transparent=True)
 #############################################################################
