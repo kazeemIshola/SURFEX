@@ -1,8 +1,8 @@
 # SURFLEX python code for simulating surface radiation and energy flux exchanges
 
 
-This python code estimates daytime surface radiation and energy fluxes over grass using a land surface scheme
-that incorporates limited routine weather data. The code also evaluate the sensitivity of the scheme
+This python script estimates daytime surface radiation and energy fluxes over grass using a land surface scheme
+that incorporates limited routine weather data. The script also evaluates the sensitivity of the scheme
 to different parameterizations of surface resistance for contrasting soil moisture regimes.
 
 
@@ -11,8 +11,12 @@ models are based on FAO method (Allen et al., 1998) and modified Jarvis approach
 Beljaars and Bosveld (1997). 
 
 
-The python code is based on the study carried out over temperate grassland with contrasting soil moisture zones (wet and free-daining)
+The python code is based on the study carried out over temperate grassland with contrasting soil moisture zones (wet and free-draining)
 in Ireland (Ishola et al., 2020).
+
+
+# Acknowledgment
+The project is funded by Teagasc under Walsh Fellowship programme. We acknowledge the providers of data used as forcing and evaluation of the scheme. The meteorological data are available from MET Eiréann, Irish Meteorological Service (https://www.met.ie/) and eddy covariance flux measurements are available from European Fluxes Database Cluster (http://www.europe-fluxdata.eu/). 
 
 
 # References
